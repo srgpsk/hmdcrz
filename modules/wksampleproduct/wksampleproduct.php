@@ -1,22 +1,22 @@
 <?php
 /**
-* 2010-2020 Webkul.
-*
-* NOTICE OF LICENSE
-*
-* All right is reserved,
-* Please go through this link for complete license : https://store.webkul.com/license.html
-*
-* DISCLAIMER
-*
-* Do not edit or add to this file if you wish to upgrade this module to newer
-* versions in the future. If you wish to customize this module for your
-* needs please refer to https://store.webkul.com/customisation-guidelines/ for more information.
-*
-*  @author    Webkul IN <support@webkul.com>
-*  @copyright 2010-2020 Webkul IN
-*  @license   https://store.webkul.com/license.html
-*/
+ * 2010-2020 Webkul.
+ *
+ * NOTICE OF LICENSE
+ *
+ * All right is reserved,
+ * Please go through this link for complete license : https://store.webkul.com/license.html
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this module to newer
+ * versions in the future. If you wish to customize this module for your
+ * needs please refer to https://store.webkul.com/customisation-guidelines/ for more information.
+ *
+ * @author    Webkul IN <support@webkul.com>
+ * @copyright 2010-2020 Webkul IN
+ * @license   https://store.webkul.com/license.html
+ */
 
 if (!defined('_PS_VERSION_')) {
     exit;
@@ -24,6 +24,7 @@ if (!defined('_PS_VERSION_')) {
 
 require_once "classes/WkSampleProductMap.php";
 require_once "classes/WkSampleCart.php";
+
 class WkSampleProduct extends Module
 {
     public $html = '';
@@ -42,11 +43,13 @@ class WkSampleProduct extends Module
         $this->displayName = $this->l('Sample Product');
         $this->description = $this->l('Allow customer to buy sample product');
         $this->confirmUninstall = $this->l('Are you sure?');
+//        $this->registerHook('displayProductListFunctionalButtonsBottom');
+
     }
 
     public function getContent()
     {
-        if (Tools::isSubmit('submit'.$this->name)) {
+        if (Tools::isSubmit('submit' . $this->name)) {
             $this->postValidation();
             if (!count($this->context->controller->errors)) {
                 $this->postProcess();
@@ -54,7 +57,7 @@ class WkSampleProduct extends Module
         } else {
             $this->html .= '<br />';
         }
-        $this->context->controller->addJS(_MODULE_DIR_.$this->name.'/views/js/wksampleproductconfig.js');
+        $this->context->controller->addJS(_MODULE_DIR_ . $this->name . '/views/js/wksampleproductconfig.js');
         $this->html .= $this->renderForm();
         return $this->html;
     }
@@ -75,43 +78,43 @@ class WkSampleProduct extends Module
                 $maxInCart = Tools::getValue('WK_GLOBAL_SAMPLE_IN_CART');
                 if ($maxInCart && !Validate::isUnsignedInt($maxInCart)) {
                     $this->context->controller->errors[] =
-                    $this->l('Maximum global sample quantity in one cart should be a number');
+                        $this->l('Maximum global sample quantity in one cart should be a number');
                 }
                 if ($priceType == 2) {
-                    if (!$sampleAmount || !Tools::strlen($sampleAmount) || ((float) $sampleAmount == 0)) {
+                    if (!$sampleAmount || !Tools::strlen($sampleAmount) || ((float)$sampleAmount == 0)) {
                         $this->context->controller->errors[] =
-                        $this->l('Please enter global sample deduction amount.');
+                            $this->l('Please enter global sample deduction amount.');
                     } elseif (!Validate::isUnsignedFloat($sampleAmount)) {
                         $this->context->controller->errors[] =
-                        $this->l('Global sample deduction amount should be a number.');
+                            $this->l('Global sample deduction amount should be a number.');
                     }
                 } elseif ($priceType == 3) {
-                    if (!$samplePercent || !Tools::strlen($samplePercent) || ((float) $samplePercent == 0)) {
+                    if (!$samplePercent || !Tools::strlen($samplePercent) || ((float)$samplePercent == 0)) {
                         $this->context->controller->errors[] =
-                        $this->l('Please enter global sample deduction percent.');
+                            $this->l('Please enter global sample deduction percent.');
                     } elseif (!Validate::isUnsignedFloat($samplePercent)) {
                         $this->context->controller->errors[] =
-                        $this->l('Global sample deduction percent should be a number.');
+                            $this->l('Global sample deduction percent should be a number.');
                     }
                 } elseif ($priceType == 4) {
-                    if (!$samplePrice || !Tools::strlen($samplePrice) || ((int) $samplePrice == 0)) {
+                    if (!$samplePrice || !Tools::strlen($samplePrice) || ((int)$samplePrice == 0)) {
                         $this->context->controller->errors[] =
-                        $this->l('Please enter global sample custom price.');
+                            $this->l('Please enter global sample custom price.');
                     } elseif (!Validate::isUnsignedFloat($samplePrice)) {
                         $this->context->controller->errors[] =
-                        $this->l('Global sample custom price should be a number.');
+                            $this->l('Global sample custom price should be a number.');
                     }
                 }
                 if (!$sampleBtn || !Tools::strlen($sampleBtn)) {
                     $this->context->controller->errors[] =
-                    $this->l('Please enter global sample button title.');
+                        $this->l('Please enter global sample button title.');
                 }
             }
         } else {
             $maxSample = Tools::getValue('WK_MAX_SAMPLE_IN_CART');
             if ($maxSample && !Validate::isUnsignedInt($maxSample)) {
                 $this->context->controller->errors[] =
-                $this->l('Maximum Sample Product in one cart should be a number');
+                    $this->l('Maximum Sample Product in one cart should be a number');
             }
             $sampleBtnBgColor = Tools::getValue('WK_SAMPLE_BUTTON_BG_COLOR');
             if (!$sampleBtnBgColor || !Tools::strlen(trim($sampleBtnBgColor))) {
@@ -139,7 +142,7 @@ class WkSampleProduct extends Module
             if (Tools::getValue('WK_GLOBAL_SAMPLE')) {
                 Configuration::updateValue(
                     'WK_GLOBAL_SAMPLE_IN_CART',
-                    (int) Tools::getValue('WK_GLOBAL_SAMPLE_IN_CART')
+                    (int)Tools::getValue('WK_GLOBAL_SAMPLE_IN_CART')
                 );
                 Configuration::updateValue(
                     'WK_GLOBAL_SAMPLE_PRICE_TYPE',
@@ -231,7 +234,7 @@ class WkSampleProduct extends Module
                     'label' => $this->l('Show sample quantity selector'),
                     'name' => 'WK_SAMPLE_QUANTITY_SPIN',
                     'hint' =>
-                    $this->l('Select if you want users to select sample quantity or add 1 on each button click.'),
+                        $this->l('Select if you want users to select sample quantity or add 1 on each button click.'),
                     'desc' => $this->l('If disabled, 1 sample will be added to cart on each sample button click.'),
                     'is_bool' => true,
                     'values' => array(
@@ -409,9 +412,9 @@ class WkSampleProduct extends Module
         $helper->default_form_language = $this->context->language->id;
         $helper->allow_employee_form_lang = Configuration::get('PS_BO_ALLOW_EMPLOYEE_FORM_LANG', 0);
         $helper->identifier = $this->identifier;
-        $helper->submit_action = 'submit'.$this->name;
+        $helper->submit_action = 'submit' . $this->name;
         $helper->currentIndex = $this->context->link->getAdminLink('AdminModules', false)
-            .'&configure='.$this->name.'&tab_module='.$this->tab.'&module_name='.$this->name;
+            . '&configure=' . $this->name . '&tab_module=' . $this->tab . '&module_name=' . $this->name;
         $helper->token = Tools::getAdminTokenLite('AdminModules');
         $helper->tpl_vars = array(
             'fields_value' => $this->getConfigFormValues(),
@@ -461,11 +464,60 @@ class WkSampleProduct extends Module
         }
     }
 
+    public function hookDisplayProductDeliveryTime($params)
+    {
+        return $this->hookDisplayRightColumnProduct($params);
+    }
+
+    public function hookDisplayProductListFunctionalButtonsBottom_($params) {
+        $idProduct = $params['product']['id_product'];
+        $product = new Product($idProduct);
+
+
+      /*      $objSampleCart = new WkSampleCart();
+            $sampleCart = $objSampleCart->getSampleCartProduct(
+                $this->context->cart->id,
+                $idProduct,
+                (int)Product::getDefaultAttribute($idProduct)
+            );
+            $prodQty = $this->getProductQuantityInCart($idProduct, (int)Product::getDefaultAttribute($idProduct));
+            $objSampleProductMap = new WkSampleProductMap();
+            $sample = $objSampleProductMap->getSampleProduct($idProduct);
+            Media::addJsDef(
+                array(
+                    'maxSampleQty' => $sample['max_cart_qty'],
+                    'productAvailableQuantity' => Product::getQuantity(
+                        $idProduct,
+                        Product::getDefaultAttribute($idProduct)
+                    ),
+                    'addToCartEnabled' => $this->isAvailableWhenOutOfStock(
+                        $idProduct,
+                        (int)Product::getDefaultAttribute($idProduct)
+                    ),
+                    'allowedQuantity' => $sample['max_cart_qty'] - $prodQty,
+                    'idPsProduct' => $idProduct,
+                    'wk_sp_token' => Tools::getToken(false)
+                )
+            );
+            if ($sampleCart) {
+                Media::addJsDef(array('sampleInCart' => 1));
+            }*/
+
+
+        if (Configuration::get('WK_SAMPLE_LOGGED_ONLY')) {
+            if (isset($this->context->customer->id)) {
+                return $this->displaySampleButton(product);
+            }
+        } else {
+            return $this->displaySampleButton($product);
+        }
+    }
+
     private function getTaxIncludedSampleAmount($sample, $idTaxRulesGroup, $psProductPrice)
     {
-        $sampleAmount = ($sample['price_type'] == 2) ? $sample['amount'] : (($psProductPrice*$sample['amount'])/100);
+        $sampleAmount = ($sample['price_type'] == 2) ? $sample['amount'] : (($psProductPrice * $sample['amount']) / 100);
         if (isset($this->context->customer->id_default_group)) {
-            $taxMethod = Group::getPriceDisplayMethod((int) $this->context->customer->id_default_group);
+            $taxMethod = Group::getPriceDisplayMethod((int)$this->context->customer->id_default_group);
         } else {
             $taxMethod = Group::getDefaultPriceDisplayMethod();
         }
@@ -489,7 +541,7 @@ class WkSampleProduct extends Module
     {
         $product = new Product($sample['id_product']);
         if (isset($this->context->customer->id_default_group)) {
-            $taxMethod = Group::getPriceDisplayMethod((int) $this->context->customer->id_default_group);
+            $taxMethod = Group::getPriceDisplayMethod((int)$this->context->customer->id_default_group);
         } else {
             $taxMethod = Group::getDefaultPriceDisplayMethod();
         }
@@ -498,7 +550,7 @@ class WkSampleProduct extends Module
         $amountToDeduct = $this->getTaxIncludedSampleAmount($sample, $product->id_tax_rules_group, $productPrice);
         $samplePrice = '';
         if (($sample['price_type'] == 2)
-        || ($sample['price_type'] == 3)) {
+            || ($sample['price_type'] == 3)) {
             $samplePrice = $productPrice - $amountToDeduct;
         } elseif ($sample['price_type'] == 4) {
             if ($sample['price_tax'] && $taxMethod) {
@@ -537,7 +589,7 @@ class WkSampleProduct extends Module
         $shouldShowButton = $objProduct->available_for_order;
         if ($shouldShowButton) {
             $defaultComb = Product::getDefaultAttribute($objProduct->id);
-            $cartQuantity = (float) $this->getProductQuantityInCart($idProduct, $idAttr);
+            $cartQuantity = (float)$this->getProductQuantityInCart($idProduct, $idAttr);
             $quantity = Product::getQuantity($objProduct->id, $defaultComb);
             $quantity -= $cartQuantity;
             switch ($objProduct->out_of_stock) {
@@ -565,7 +617,7 @@ class WkSampleProduct extends Module
         $sample = $objSampleProductMap->getSampleProduct($product->id);
         if ($sample && $sample['active']) {
             if (isset($this->context->customer->id_default_group)) {
-                $taxMethod = Group::getPriceDisplayMethod((int) $this->context->customer->id_default_group);
+                $taxMethod = Group::getPriceDisplayMethod((int)$this->context->customer->id_default_group);
             } else {
                 $taxMethod = Group::getDefaultPriceDisplayMethod();
             }
@@ -626,7 +678,7 @@ class WkSampleProduct extends Module
     /**
      * Display sample coulmn in Order render list
      *
-     * @param  Array $params row data
+     * @param Array $params row data
      */
     public function hookActionAdminOrdersListingFieldsModifier($params)
     {
@@ -635,7 +687,7 @@ class WkSampleProduct extends Module
         }
         if (isset($params['join'])) {
             ' ON (apo.`id_order` = a.`id_order`)';
-            $params['join'] .= ' LEFT JOIN '._DB_PREFIX_.'wk_sample_cart wsc ON (a.id_order = wsc.id_order)';
+            $params['join'] .= ' LEFT JOIN ' . _DB_PREFIX_ . 'wk_sample_cart wsc ON (a.id_order = wsc.id_order)';
         }
         if (isset($params['join'])) {
             $params['group_by'] .= ' GROUP BY a.`id_order`';
@@ -697,7 +749,7 @@ class WkSampleProduct extends Module
     /**
      * Display Extra Information on Product Edit
      *
-     * @param  array $params this product details
+     * @param array $params this product details
      * @return tpl
      */
     public function hookDisplayAdminProductsExtra($params)
@@ -706,7 +758,7 @@ class WkSampleProduct extends Module
         if ($idProduct) {
             if (Module::isInstalled('marketplace') && WkMpSellerProduct::getSellerProductByPsIdProduct($idProduct)) {
                 $this->context->controller->warnings[] =
-                $this->l('This is a marketplace product. You can create the sample in Marketplace products page.');
+                    $this->l('This is a marketplace product. You can create the sample in Marketplace products page.');
             } else {
                 $objSampleProductMap = new WkSampleProductMap();
                 $sample = $objSampleProductMap->getSampleProduct($idProduct);
@@ -716,8 +768,8 @@ class WkSampleProduct extends Module
                         'sample' => $sample,
                     ));
                 }
-                $fileDir = _PS_MODULE_DIR_.$this->name.'/views/samples';
-                $files = glob($fileDir."/sample_".Tools::getValue('id_product')."*");
+                $fileDir = _PS_MODULE_DIR_ . $this->name . '/views/samples';
+                $files = glob($fileDir . "/sample_" . Tools::getValue('id_product') . "*");
                 if (count($files) > 0) {
                     $sampleFileArr = explode('/', $files[0]);
                     $sampleFileName = end($sampleFileArr);
@@ -738,14 +790,14 @@ class WkSampleProduct extends Module
                     'shouldUpload' => $product_download->id
                         && $product_download->filename &&
                         $product_download->display_filename,
-                    'sampleJSUrl' => _MODULE_DIR_.'wksampleproduct/views/js/wksampleproducttab.js',
+                    'sampleJSUrl' => _MODULE_DIR_ . 'wksampleproduct/views/js/wksampleproducttab.js',
                     'productPrice' => Tools::displayPrice($product->getPrice(false)),
                 ));
                 return $this->display(__FILE__, 'adminproduct.tpl');
             }
         } else {
             $this->context->controller->warnings[] =
-            $this->l('You must save this product before adding sample product');
+                $this->l('You must save this product before adding sample product');
         }
     }
 
@@ -760,13 +812,13 @@ class WkSampleProduct extends Module
             $info['id_product_attribute']
         );
         if ($sampleOrder) {
-            $filePath = _PS_MODULE_DIR_.$this->name.'/views/samples/';
-            $params[2] = 'sample_'.$info['id_product'];
-            $files = glob($filePath.$params[2]."*");
+            $filePath = _PS_MODULE_DIR_ . $this->name . '/views/samples/';
+            $params[2] = 'sample_' . $info['id_product'];
+            $files = glob($filePath . $params[2] . "*");
             if (count($files) > 0) {
                 $fileNameParts = explode('/', $files[0]);
                 $fileToDownload = end($fileNameParts);
-                $params[1] = $filePath.$fileToDownload;
+                $params[1] = $filePath . $fileToDownload;
                 $params[2] = $fileToDownload;
             } else {
                 $params[2] = false;
@@ -779,8 +831,8 @@ class WkSampleProduct extends Module
     {
         if ($this->context->controller->controller_name == 'AdminProducts') {
             $maxUploadSize = (Configuration::get('PS_ATTACHMENT_MAXIMUM_SIZE') <
-            Configuration::get('PS_LIMIT_UPLOAD_FILE_VALUE')) ?
-            Configuration::get('PS_ATTACHMENT_MAXIMUM_SIZE') : Configuration::get('PS_LIMIT_UPLOAD_FILE_VALUE');
+                Configuration::get('PS_LIMIT_UPLOAD_FILE_VALUE')) ?
+                Configuration::get('PS_ATTACHMENT_MAXIMUM_SIZE') : Configuration::get('PS_LIMIT_UPLOAD_FILE_VALUE');
             Media::addJsDef(
                 array(
                     'sampleMaxSizeError' => $this->l('File is too large.'),
@@ -793,7 +845,7 @@ class WkSampleProduct extends Module
     /**
      * Save product extra information
      *
-     * @param  array $params this product details
+     * @param array $params this product details
      */
     public function hookActionProductSave($params)
     {
@@ -819,17 +871,17 @@ class WkSampleProduct extends Module
                     $productPrice = $psProduct->getPriceStatic($params['id_product'], true);
                     $sampleAmountWithTax = $sampleAmount;
                     if ($priceType == 3) {
-                        $sampleAmountPercent = ($productPrice*$sampleAmount)/100;
+                        $sampleAmountPercent = ($productPrice * $sampleAmount) / 100;
                         if ($sampleAmountPercent > $productPrice) {
                             $this->context->controller->errors[] =
-                            $this->l('Amount should be less than product price');
+                                $this->l('Amount should be less than product price');
                         }
                     } else {
                         //Amount reduction
                         if ($priceTax == 1) {
                             if ($sampleAmount > $productPrice) {
                                 $this->context->controller->errors[] =
-                                $this->l('Amount should be less than product price');
+                                    $this->l('Amount should be less than product price');
                             }
                         } else {
                             $taxRules = TaxRule::getTaxRulesByGroupId(
@@ -839,10 +891,10 @@ class WkSampleProduct extends Module
                             foreach ($taxRules as $taxArr) {
                                 //If any taxincluded amount is greater than product price
                                 $taxRate = $taxArr['rate'];
-                                $sampleAmountWithTax = $sampleAmount + (($sampleAmount*$taxRate)/100);
+                                $sampleAmountWithTax = $sampleAmount + (($sampleAmount * $taxRate) / 100);
                                 if ($sampleAmountWithTax > $productPrice) {
                                     $this->context->controller->errors[] =
-                                    $this->l('Amount should be less than product price');
+                                        $this->l('Amount should be less than product price');
                                     break;
                                 }
                             }
@@ -866,8 +918,8 @@ class WkSampleProduct extends Module
             }
 
             if ($status && $psProduct->is_virtual && $hasVirtualFile) {
-                $fileDir = _PS_MODULE_DIR_.$this->name.'/views/samples';
-                $files = glob($fileDir."/sample_".Tools::getValue('id_product')."*");
+                $fileDir = _PS_MODULE_DIR_ . $this->name . '/views/samples';
+                $files = glob($fileDir . "/sample_" . Tools::getValue('id_product') . "*");
                 if (count($files) == 0) {
                     if (Tools::getValue('deleteSampleFile') == $psProduct->id) {
                         $this->context->controller->errors[] = $this->l('Sample file does not exist.');
@@ -876,13 +928,13 @@ class WkSampleProduct extends Module
                             $sampleFile = $_FILES['uploaded_sample_file'];
                             if (($sampleFile['error'] == 4) || ($sampleFile['size'] == 0)) {
                                 $this->context->controller->errors[] =
-                                $this->l('Sample file is required for virtual product sample.');
-                            } elseif ($sampleFile['size']/1000000 >= Configuration::get('PS_ATTACHMENT_MAXIMUM_SIZE')) {
+                                    $this->l('Sample file is required for virtual product sample.');
+                            } elseif ($sampleFile['size'] / 1000000 >= Configuration::get('PS_ATTACHMENT_MAXIMUM_SIZE')) {
                                 $this->context->controller->errors[] = $this->l('Sample file is too large.');
                             }
                         } else {
                             $this->context->controller->errors[] =
-                            $this->l('Sample file is required for virtual product sample.');
+                                $this->l('Sample file is required for virtual product sample.');
                         }
                     }
                 }
@@ -909,8 +961,8 @@ class WkSampleProduct extends Module
                 $sample->save();
                 if ($sample->save() && $psProduct->is_virtual) {
                     $sampleFile = $_FILES['uploaded_sample_file'];
-                    $fileDir = _PS_MODULE_DIR_.$this->name.'/views/samples';
-                    $files = glob($fileDir."/sample_".Tools::getValue('id_product')."*");
+                    $fileDir = _PS_MODULE_DIR_ . $this->name . '/views/samples';
+                    $files = glob($fileDir . "/sample_" . Tools::getValue('id_product') . "*");
                     if ($hasVirtualFile) {
                         if (Tools::getValue('deleteSampleFile') == $psProduct->id) {
                             //delete file
@@ -918,14 +970,14 @@ class WkSampleProduct extends Module
                                 unlink($file);
                             }
                         } elseif (($sampleFile['error'] == 0)
-                        && ($sampleFile['size'] > 0)) {
+                            && ($sampleFile['size'] > 0)) {
                             if (!file_exists($fileDir)) {
-                                @mkdir($fileDir.'/', 0777, true);
+                                @mkdir($fileDir . '/', 0777, true);
                             }
-                            if (!file_exists($fileDir.'/index.php')) {
+                            if (!file_exists($fileDir . '/index.php')) {
                                 @copy(
-                                    _PS_MODULE_DIR_.$this->name.'/index.php',
-                                    $fileDir.'/index.php'
+                                    _PS_MODULE_DIR_ . $this->name . '/index.php',
+                                    $fileDir . '/index.php'
                                 );
                             }
 
@@ -937,18 +989,18 @@ class WkSampleProduct extends Module
                                 $ext = '';
                             }
 
-                            $files = glob($fileDir."/sample_".Tools::getValue('id_product')."*");
+                            $files = glob($fileDir . "/sample_" . Tools::getValue('id_product') . "*");
                             foreach ($files as $file) {
                                 unlink($file);
                             }
 
                             $helper = new HelperUploader('uploaded_sample_file');
                             $file = $helper->setPostMaxSize(Tools::getOctets(ini_get('upload_max_filesize')))
-                            ->setSavePath($fileDir.'/')
-                            ->upload($sampleFile, 'sample_'.Tools::getValue('id_product').'.'.$ext);
+                                ->setSavePath($fileDir . '/')
+                                ->upload($sampleFile, 'sample_' . Tools::getValue('id_product') . '.' . $ext);
                             if (Tools::strlen($file['error']) && $file['error'] != 0) {
                                 $this->context->controller->errors[] =
-                                $file['error'];
+                                    $file['error'];
                             }
                         }
                     } else {
@@ -1015,9 +1067,9 @@ class WkSampleProduct extends Module
             $sampleCart = $objSampleCart->getSampleCartProduct(
                 $this->context->cart->id,
                 $idProduct,
-                (int) Product::getDefaultAttribute($idProduct)
+                (int)Product::getDefaultAttribute($idProduct)
             );
-            $prodQty = $this->getProductQuantityInCart($idProduct, (int) Product::getDefaultAttribute($idProduct));
+            $prodQty = $this->getProductQuantityInCart($idProduct, (int)Product::getDefaultAttribute($idProduct));
             $objSampleProductMap = new WkSampleProductMap();
             $sample = $objSampleProductMap->getSampleProduct($idProduct);
             Media::addJsDef(
@@ -1029,7 +1081,7 @@ class WkSampleProduct extends Module
                     ),
                     'addToCartEnabled' => $this->isAvailableWhenOutOfStock(
                         $idProduct,
-                        (int) Product::getDefaultAttribute($idProduct)
+                        (int)Product::getDefaultAttribute($idProduct)
                     ),
                     'allowedQuantity' => $sample['max_cart_qty'] - $prodQty,
                     'idPsProduct' => $idProduct,
@@ -1041,10 +1093,10 @@ class WkSampleProduct extends Module
             }
         }
         $this->context->controller->addCSS(
-            $this->_path.'/views/css/wksampleproduct.css'
+            $this->_path . '/views/css/wksampleproduct.css'
         );
         $this->context->controller->addJS(
-            $this->_path.'/views/js/wksampleproduct.js'
+            $this->_path . '/views/js/wksampleproduct.js'
         );
     }
 
@@ -1059,7 +1111,7 @@ class WkSampleProduct extends Module
         );
         if ($sampleCart) {
             return $this->context->smarty->fetch(
-                _PS_MODULE_DIR_.$this->name.'/views/templates/hook/cartsamplenotifier.tpl'
+                _PS_MODULE_DIR_ . $this->name . '/views/templates/hook/cartsamplenotifier.tpl'
             );
         }
     }
@@ -1068,7 +1120,7 @@ class WkSampleProduct extends Module
     /**
      * Delete Sample from our map if delete
      *
-     * @param  array $params
+     * @param array $params
      */
 
     public function hookActionAfterDeleteProductInCart($params)
@@ -1086,7 +1138,7 @@ class WkSampleProduct extends Module
      * Prevent to add main product if sample already in cart
      * Prevent to update quantity of sample if ristricted
      *
-     * @param  array $params
+     * @param array $params
      */
     public function hookActionBeforeCartUpdateQty($params)
     {
@@ -1106,7 +1158,7 @@ class WkSampleProduct extends Module
                 if (isset($this->context->cookie->sampleProductId)
                     && isset($this->context->cookie->sampleProductIdAttr)
                     && ($this->context->cookie->sampleProductId == $product->id)
-                    && ($this->context->cookie->sampleProductIdAttr == (int) $params['id_product_attribute'])
+                    && ($this->context->cookie->sampleProductIdAttr == (int)$params['id_product_attribute'])
                     && !$isSampleProduct
                 ) {
                     unset($this->context->cookie->sampleProductId);
@@ -1185,7 +1237,9 @@ class WkSampleProduct extends Module
     {
         return $this->registerHook(array(
             'displayAdminProductsExtra',
-            'displayRightColumnProduct',
+//            'displayRightColumnProduct',
+            'displayProductDeliveryTime',
+            'displayProductListFunctionalButtonsBottom',
             'actionProductSave',
             'actionBeforeCartUpdateQty',
             'actionCartSave',
@@ -1250,7 +1304,7 @@ class WkSampleProduct extends Module
             }
         }
 
-        $sampleVirtualFiles = glob(_PS_MODULE_DIR_.$this->name.'/views/samples/sample_*');
+        $sampleVirtualFiles = glob(_PS_MODULE_DIR_ . $this->name . '/views/samples/sample_*');
         foreach ($sampleVirtualFiles as $sample) {
             if (!unlink($sample)) {
                 return false;
@@ -1263,10 +1317,10 @@ class WkSampleProduct extends Module
     {
         return Db::getInstance()->execute('
             DROP TABLE IF EXISTS
-            `'._DB_PREFIX_.'wk_sample_product`,
-            `'._DB_PREFIX_.'wk_sample_product_shop`,
-            `'._DB_PREFIX_.'wk_sample_cart`,
-            `'._DB_PREFIX_.'wk_sample_cart_shop`');
+            `' . _DB_PREFIX_ . 'wk_sample_product`,
+            `' . _DB_PREFIX_ . 'wk_sample_product_shop`,
+            `' . _DB_PREFIX_ . 'wk_sample_cart`,
+            `' . _DB_PREFIX_ . 'wk_sample_cart_shop`');
     }
 
     public function uninstall()
@@ -1295,7 +1349,7 @@ class WkSampleProduct extends Module
     private function getDbTableQueries()
     {
         return array(
-            "CREATE TABLE IF NOT EXISTS `"._DB_PREFIX_."wk_sample_product` (
+            "CREATE TABLE IF NOT EXISTS `" . _DB_PREFIX_ . "wk_sample_product` (
                 `id_sample_product` int(10) unsigned NOT NULL auto_increment,
                 `id_product` int(10) unsigned NOT NULL,
                 `id_product_attribute` int(10) unsigned NOT NULL,
@@ -1310,8 +1364,8 @@ class WkSampleProduct extends Module
                 `date_add` datetime NOT NULL,
                 `date_upd` datetime NOT NULL,
             PRIMARY KEY  (`id_sample_product`)
-            ) ENGINE="._MYSQL_ENGINE_." DEFAULT CHARSET=utf8",
-            "CREATE TABLE IF NOT EXISTS `"._DB_PREFIX_."wk_sample_product_shop` (
+            ) ENGINE=" . _MYSQL_ENGINE_ . " DEFAULT CHARSET=utf8",
+            "CREATE TABLE IF NOT EXISTS `" . _DB_PREFIX_ . "wk_sample_product_shop` (
                 `id_sample_product` int(10) unsigned NOT NULL,
                 `id_shop` int(10) unsigned NOT NULL,
                 `id_product` int(10) unsigned NOT NULL,
@@ -1325,8 +1379,8 @@ class WkSampleProduct extends Module
                 `description` TEXT,
                 `active` tinyint(1) unsigned NOT NULL DEFAULT '0',
             PRIMARY KEY  (`id_sample_product`, `id_shop`)
-            ) ENGINE="._MYSQL_ENGINE_." DEFAULT CHARSET=utf8",
-            "CREATE TABLE IF NOT EXISTS `"._DB_PREFIX_."wk_sample_cart` (
+            ) ENGINE=" . _MYSQL_ENGINE_ . " DEFAULT CHARSET=utf8",
+            "CREATE TABLE IF NOT EXISTS `" . _DB_PREFIX_ . "wk_sample_cart` (
                 `id_sample_cart` int(10) unsigned NOT NULL auto_increment,
                 `id_cart` int(10) unsigned NOT NULL,
                 `id_order` int(10) unsigned NOT NULL,
@@ -1337,8 +1391,8 @@ class WkSampleProduct extends Module
                 `date_add` datetime NOT NULL,
                 `date_upd` datetime NOT NULL,
             PRIMARY KEY  (`id_sample_cart`)
-            ) ENGINE="._MYSQL_ENGINE_." DEFAULT CHARSET=utf8",
-            "CREATE TABLE IF NOT EXISTS `"._DB_PREFIX_."wk_sample_cart_shop` (
+            ) ENGINE=" . _MYSQL_ENGINE_ . " DEFAULT CHARSET=utf8",
+            "CREATE TABLE IF NOT EXISTS `" . _DB_PREFIX_ . "wk_sample_cart_shop` (
                 `id_sample_cart` int(10) unsigned NOT NULL auto_increment,
                 `id_shop` int(10) unsigned NOT NULL,
                 `id_cart` int(10) unsigned NOT NULL,
@@ -1348,7 +1402,9 @@ class WkSampleProduct extends Module
                 `id_specific_price` int(10) unsigned NOT NULL,
                 `sample` tinyint(1) unsigned NOT NULL DEFAULT '1',
             PRIMARY KEY  (`id_sample_cart`, `id_shop`)
-            ) ENGINE="._MYSQL_ENGINE_." DEFAULT CHARSET=utf8",
+            ) ENGINE=" . _MYSQL_ENGINE_ . " DEFAULT CHARSET=utf8",
+            "ALTER TABLE `" . _DB_PREFIX_ . "wk_sample_product` ADD UNIQUE `id_product, id_product_attribute` (`id_product`, `id_product_attribute`)",
+            "ALTER TABLE `" . _DB_PREFIX_ ."wk_sample_product_shop` ADD UNIQUE `id_product, id_product_attribute` (`id_product`, `id_product_attribute`)",
         );
     }
 }

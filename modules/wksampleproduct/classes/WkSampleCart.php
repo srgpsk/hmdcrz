@@ -222,61 +222,30 @@ class WkSampleCart extends ObjectModel
         }
 
         $product = new Product($idProduct);
-        if (isset($this->context->customer->id_default_group)) {
-            $taxMethod = Group::getPriceDisplayMethod((int) $this->context->customer->id_default_group);
-        } else {
-            $taxMethod = Group::getDefaultPriceDisplayMethod();
-        }
         //Add specific price discount
-        $productPriceSpecific = Product::getPriceStatic($idProduct, !$taxMethod);
-        $productPriceStandard = $product->price;
-        if (!$taxMethod) {
-            $productPriceStandard = $this->addTaxToAmount(
-                $productPriceStandard,
-                $product->id_tax_rules_group,
-                $this->context
-            );
-        }
-        $specificAmount = Tools::ps_round($productPriceStandard, 2) - Tools::ps_round($productPriceSpecific, 2);
+        $productPriceSpecific = Product::getPriceStatic($idProduct, true, $ipa);
+        $productPriceStandard = Product::getPriceStatic($idProduct, true, $ipa, 6, null, false, false);
+        $specificAmount = Product::getPriceStatic($idProduct, true, $ipa, 6, null, true);
         if ($sample['price_type'] == 2) { //Deduct fix amount from product price
             $reduction_type = 'amount';
             $price = '-1.000000';
-            if ($taxMethod == $sample['price_tax']) {
-                if ($taxMethod) {
-                    //price is excluded but sample is included (remove tax)
-                    $sampleAmountTaxExcl = $this->removeTaxes(
-                        $sample['amount'],
-                        $product->id_tax_rules_group,
-                        $this->context
-                    );
-                    $reduction = (float)Tools::ps_round((float)$sampleAmountTaxExcl, 6) + (float) $specificAmount;
-                } else {
-                    //price is included but sample is excluded (add tax)
-                    $sampleAmountTaxExcl = $sample['amount'];
-                    $sampleAmountTaxIncl = $this->getTaxIncludedReduction(
-                        $product->id_tax_rules_group,
-                        $sampleAmountTaxExcl,
-                        true
-                    );
-                    $reduction = (float)Tools::ps_round((float)$sampleAmountTaxIncl, 6) + (float) $specificAmount;
-                }
-            } else {
+            if ($sample['price_tax']) {
+                // sample is included
                 $reduction = (float)Tools::ps_round($sample['amount'], 6) + (float) $specificAmount;
+            } else {
+                // sample is exluded (remove tax)
+                $sampleAmountTaxExcl = $this->removeTaxes(
+                    $specificAmount,
+                    $product->id_tax_rules_group,
+                    $this->context
+                );
+                $reduction = (float)Tools::ps_round((float)$sample['amount'], 6) + (float) $sampleAmountTaxExcl;
             }
-            $sample['price_tax'] = (int) !$taxMethod;
         } elseif ($sample['price_type'] == 3) { //A percentage of product price
             $reduction_type = 'percentage';
             $price = '-1.000000';
             $sample['price_tax'] = 1;
-            $productPriceStandard = $product->price;
-            if (!$taxMethod) {
-                $productPriceStandard = $this->addTaxToAmount(
-                    $productPriceStandard,
-                    $product->id_tax_rules_group,
-                    $this->context
-                );
-            }
-            $sampleSpecificAmount = (($productPriceStandard - $specificAmount) * (float)$sample['amount'])/100;
+            $sampleSpecificAmount = ($productPriceSpecific * (float)$sample['amount'])/100;
             $totalSpecificAmount = (float) $sampleSpecificAmount + (float) $specificAmount;
             $reductionPercent = $totalSpecificAmount / $productPriceStandard;
             $reduction = (float)Tools::ps_round($reductionPercent, 6);
@@ -294,9 +263,8 @@ class WkSampleCart extends ObjectModel
             }
         } elseif ($sample['price_type'] == 5) {
             $reduction_type = 'amount';
-            $price = '-1.000000';
-            $product = new Product($idProduct);
-            $reduction = $product->getPriceWithoutReduct();
+            $price = '0.000000';
+            $reduction = 0;
         } else { // price is original as product price
             $this->createSampleCart($idProduct, $ipa);
             return;
