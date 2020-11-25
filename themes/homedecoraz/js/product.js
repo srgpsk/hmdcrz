@@ -138,6 +138,11 @@ $(document).ready(function() {
             }); 
         }
     });
+
+    // footage units from sold by
+    var sfoUnit = $('#ptab-data tr td:contains("Sold By")').next('td').text();
+    $('.SquareFootageOptions-unit').text(sfoUnit);
+
     $("#calculateFootage").button().on("click", function(e) {
         e.preventDefault();
         $("#dialog-form").css({

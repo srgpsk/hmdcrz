@@ -110,3 +110,13 @@ p.payment_module.paypal a {
 #new_account_form .dni,
 #new_account_form .postcode {
   display: none; }
+
+/* sample */
+/*
+.delivery_option[data-sample-carrier]:first-child:last-child {
+    display: block;
+}
+.delivery_option[data-sample-carrier] {
+    display: none;
+}
+*/

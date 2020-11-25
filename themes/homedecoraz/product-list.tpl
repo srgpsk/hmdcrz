@@ -56,6 +56,20 @@
                         <a class="product_img_link" href="{$product.link|escape:'html':'UTF-8'}" title="{$product.name|escape:'html':'UTF-8'}" itemprop="url">
                             <img class="replace-2x img-responsive" src="{$link->getImageLink($product.link_rewrite, $product.id_image, 'home_default')|escape:'html':'UTF-8'}" alt="{if !empty($product.legend)}{$product.legend|escape:'html':'UTF-8'}{else}{$product.name|escape:'html':'UTF-8'}{/if}" title="{if !empty($product.legend)}{$product.legend|escape:'html':'UTF-8'}{else}{$product.name|escape:'html':'UTF-8'}{/if}" width="{$homeSize.width}" height="{$homeSize.height}" itemprop="image" />
                         </a>
+                        <div class="functional-buttons clearfix">
+                            {hook h='displayProductListFunctionalButtons' product=$product}
+                            {if isset($quick_view) && $quick_view}
+                                <div class="quick-view-wrapper-mobile">
+                                    <a class="quick-view-mobile" href="{$product.link|escape:'html':'UTF-8'}" rel="{$product.link|escape:'html':'UTF-8'}">
+                                        <i class="fa icon-search"></i>
+                                    </a>
+                                </div>
+                                <a class="quick-view" href="{$product.link|escape:'html':'UTF-8'}" rel="{$product.link|escape:'html':'UTF-8'}">
+                                    <span>{l s='Quick view'}</span>
+                                </a>
+                            {/if}
+
+                        </div>
 
                         {if (!$PS_CATALOG_MODE AND ((isset($product.show_price) && $product.show_price) || (isset($product.available_for_order) && $product.available_for_order)))}
                             {if isset($product.new) && $product.new == 1}
@@ -73,8 +87,11 @@
 
                     <div class="product-description-container">
                         <h3 itemprop="name">
-                            <a href="{$product.link|escape:'html':'UTF-8'}" title="{$product.name|escape:'html':'UTF-8'}" itemprop="url" >
-                                {$product.name|truncate:60:'...'|escape:'html':'UTF-8'}<br/>{if isset($product.manufacturer_name)}<span class="brand">{l s='by'}{l s=' '}{$product.manufacturer_name|escape:'htmlall':'UTF-8'}</span>{/if}
+                            <a class="product-name-list" href="{$product.link|escape:'html':'UTF-8'}" title="{$product.name|escape:'html':'UTF-8'}" itemprop="url" >
+                                {$product.name|truncate:60:'...'|escape:'html':'UTF-8'}
+                            </a>
+                            <a href="{$product.link|escape:'html':'UTF-8'}" title="{$product.manufacturer_name|escape:'html':'UTF-8'}" itemprop="url" >
+                                {if isset($product.manufacturer_name)}<span class="brand">{l s='by'}{l s=' '}{$product.manufacturer_name|escape:'htmlall':'UTF-8'}</span>{/if}
                             </a>
                         </h3>
 
@@ -129,6 +146,7 @@
                     {/if}
 
                     <div class="button-container">
+                        {hook h='displayProductListFunctionalButtonsBottom' product=$product}
                         {if ($product.id_product_attribute == 0 || (isset($add_prod_display) && ($add_prod_display == 1))) && $product.available_for_order && !isset($restricted_country_mode) && $product.minimal_quantity <= 1 && $product.customizable != 2 && !$PS_CATALOG_MODE}
                             {if (!isset($product.customization_required) || !$product.customization_required) && ($product.allow_oosp || $product.quantity > 0)}
                                 {if isset($static_token)}
@@ -153,17 +171,16 @@
                         <div class="c"></div>
                     </div>
 
-                    {if $page_name != 'index'}
+{*                    {if $page_name != 'index'}
                         <div class="functional-buttons clearfix">
                             {hook h='displayProductListFunctionalButtons' product=$product}
-
                             {if isset($comparator_max_item) && $comparator_max_item}
                                 <div class="compare">
                                     <a class="add_to_compare" href="{$product.link|escape:'html':'UTF-8'}" data-id-product="{$product.id_product}">{l s='Add to Compare'}</a>
                                 </div>
                             {/if}
                         </div>
-                    {/if}
+                    {/if}*}
                 </div>
             </li>
         {/foreach}

@@ -66,9 +66,10 @@
 								{l s='Choose a shipping option'}
 							{/if}
 						</p>
+{*						<pre>{$option_list|var_dump}</pre>*}
 						<div class="delivery_options">
 							{foreach $option_list as $key => $option}
-								<div class="delivery_option {if ($option@index % 2)}alternate_{/if}item">
+								<div class="delivery_option {if ($option@index % 2)}alternate_{/if}item"{if stripos($option['carrier_list'][$key|rtrim:','].instance->name, 'sample') !== false} data-sample-carrier{/if}>
 									<div>
 										<table class="resume table table-bordered{if !$option.unique_carrier} not-displayable{/if}">
 											<tr>

@@ -24,7 +24,15 @@
 *}
 
 <div class="wishlist">
-	<a class="addToWishlist wishlistProd_{$product.id_product|intval}" href="#" rel="{$product.id_product|intval}" onclick="WishlistCart('wishlist_block_list', 'add', '{$product.id_product|intval}', false, 1); return false;">
-		{l s="Add to Wishlist" mod='blockwishlist'}
-	</a>
+    <a class="addToWishlist wishlistProd_{$product.id_product|intval}" href="#" rel="{$product.id_product|intval}"
+       onclick="WishlistCart('wishlist_block_list', 'add', '{$product.id_product|intval}', false, 1); return false;">
+        {l s="Save" mod='blockwishlist'}
+    </a>
+</div>
+<div class="wishlist-wrapper-mobile">
+    <a class="wishlist-mobile addToWishlist wishlistProd_{$product.id_product|intval}" href="#"
+       rel="{$product.id_product|intval}"
+       onclick="WishlistCart('wishlist_block_list', 'add', '{$product.id_product|intval}', false, 1); return false;">
+        <i class="fa icon-heart-o"></i>
+    </a>
 </div>

@@ -80,6 +80,8 @@
                     {elseif $product->specificPrice && $product->specificPrice.reduction && $productPriceWithoutReduction > $productPrice}
                         <span class="discount">{l s='Reduced price!'}</span>
                     {/if}
+                    {if isset($HOOK_PRODUCT_ACTIONS) && $HOOK_PRODUCT_ACTIONS}{$HOOK_PRODUCT_ACTIONS}{/if}
+
 
                     {if $have_image}
                         <span id="view_full_size">
@@ -349,6 +351,11 @@
                                     </p>
                                 </div>
                             </div>
+
+
+
+
+
                     	</div>
                     </div>
                     {else}
@@ -374,7 +381,7 @@
                                                           </div>
                                                        </div>
                                                     </td>
-                                                    <td>
+                                                    <td class="align-middle">
                                                         <a class="price-link" id="calculateFootage">How many Square Feet Do I Need?</a>
                                                     </td>
                                                 </tr>
@@ -383,13 +390,13 @@
                                     </td>
                                  </tr>
                                  <tr>
-                                    <td><span class="FloatLabel is-active pl-TextInput-label">Coverage Per Unit</span></td>
-                                    <td>Units Needed</td>
+                                     <td><span class="SquareFootageOptions-unit">Unit</span>s Needed</td>
+                                     <td><span class="FloatLabel is-active pl-TextInput-label">Coverage Per <span class="SquareFootageOptions-unit">Unit</span></span></td>
                                     <td>Total Sqft Included</td>
                                 </tr>
                                 <tr>
-                                    <td class="SquareFootageOptions-details-number">{$coverage} sqft</td>
                                     <td class="SquareFootageOptions-details-number" id="numberOfBox"></td>
+                                    <td class="SquareFootageOptions-details-number">{$coverage} sqft</td>
                                     <td class="SquareFootageOptions-details-number" id="totalSqFt"></td>
                                 </tr>
                                  <tr>
@@ -404,7 +411,7 @@
                             <div{if (!$allow_oosp && $product->quantity <= 0) || !$product->available_for_order || (isset($restricted_country_mode) && $restricted_country_mode) || $PS_CATALOG_MODE} class="unvisible"{/if}>
                                 <p id="add_to_cart" class="buttons_bottom_block no-print">
                                     <button type="submit" name="Submit" class="exclusive">
-                                        <span>{if $content_only && (isset($product->customization_required) && $product->customization_required)}{l s='Customize'}{else}<i class="icon-shopping-cart"></i> <span>{l s='Add to cart'}</span>{/if}</span>
+                                        <span>{if $content_only && (isset($product->customization_required) && $product->customization_required)}{l s='Customize'}{else}{*<i class="icon-shopping-cart"></i>*} <span>{l s='Add to cart'}</span>{/if}</span>
                                     </button>
                                 </p>
                             </div>
