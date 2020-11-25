@@ -1,0 +1,69 @@
+/**
+* 2010-2020 Webkul.
+*
+* NOTICE OF LICENSE
+*
+* All rights is reserved,
+* Please go through this link for complete license : https://store.webkul.com/license.html
+*
+* DISCLAIMER
+*
+* Do not edit or add to this file if you wish to upgrade this module to newer
+* versions in the future. If you wish to customize this module for your
+* needs please refer to https://store.webkul.com/customisation-guidelines/ for more information.
+*
+*  @author    Webkul IN <support@webkul.com>
+*  @copyright 2010-2020 Webkul IN
+*  @license   https://store.webkul.com/license.html
+*/
+
+.wk-sample-block {
+    margin: 25px 0;
+}
+.wk-sample-block .sample-buy-block {
+    display: flex;
+}
+.wk-sample-block .sample-description {
+    display: inline-block;
+    margin: 0 0 0 1em;
+    color: #666666;
+}
+
+.wk-sample-block .add-to-cart {
+    background: #ffffff !important;
+    border: 2px solid #efaf41 !important;
+    color: #efaf41 !important;
+    font-size: 1.2em !important;
+}
+
+.wk-sample-block .add-to-cart:hover {
+    border-color: #f4bb5f;
+    color: #f4bb5f;
+}
+
+#wk_sp_quantity_wanted_p input {
+    width: 78px;
+    height: 27px;
+    padding: 0 6px;
+    float: left;
+    border: 1px solid #d6d4d4;
+    line-height: 27px;
+}
+
+#wk_sp_quantity_wanted_p .btn {
+    float: left;
+    margin-left: 3px;
+}
+
+#wk_sp_quantity_wanted_p label {
+    display: block;
+    margin-bottom: 7px;
+}
+
+/* product list */
+.product-container .sample-description {
+    display: none;
+}
+.product-container .wk-sample-block {
+    margin: 0 0 .5em 0;
+}
