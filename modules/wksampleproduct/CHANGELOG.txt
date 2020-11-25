@@ -1,0 +1,38 @@
+---------------------------
+ChangeLog: V1.0.1 to V1.1.0
+---------------------------
+New Features:
+- Global sample configuration: a setting to provide a sample fro whole catalog.
+- Combination sample compatibility added.
+- `id_product_attribute` added in wk_sample_cart table to make this compatible with combinations.
+- New configuration for Buy sample button text color and Background color.
+- New configuration for sample quantity spinner.
+- Multistore compatibility.
+- Sample add to cart action is now compatible with standard add to cart popup.
+
+Bug Fix:
+- Cart controller quantity display issue fixed with prestashop events.
+- Always disabled sample button fixed in case of periodic Ajax requests.
+- Cart::CheckQuantities() override added to restrict the checkout if sample quantity is decreased than before.
+- "Free sample" translation issue fixed.
+
+
+
+---------------------------
+ChangeLog: V1.0.0 to V1.0.1
+---------------------------
+New Features:
+- Virtual product sample has been implemented.
+- New configuration for product specific price discount (Consider discount in sample price or not).
+- Sample price compatibility with existing product specific prices has been managed.
+- Tax removed from precentage type reduction.
+- Sample product identification in cart ("sample" will be displayed under the sample products in cart)
+
+Bug Fix:
+- The sample price has been managed according to price display type of customer group. (Tax incl/excl).
+- Sample price issues (incorrect prices) has been resolved.
+- Sample product add-to-cart issue when max quantity in cart is less than min quantity for purchase.
+- Script validation in sample product description field
+- Sample and standard product cannot be added to cart together.
+
+- First Version: V1.0.0 Compatible to PrestaShop V1.6.x.x
