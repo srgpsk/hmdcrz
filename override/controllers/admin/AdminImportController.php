@@ -15,13 +15,20 @@ class AdminImportController extends AdminImportControllerCore
         parent::__construct();
 
         if((int)Tools::getValue('entity') === $this->entities[$this->l('Products')]) {
+
+            self::$validators['image'] = array(
+                'AdminImportController',
+                'split'
+            );
+
+
             $sample_fields = array(
                 'max_cart_qty' => array('label' => $this->l('WKS Max Cart Qty'), 'help' => 'Default is 5, Integer, WkSampleProduct field'),
                 'price_type' => array('label' => $this->l('WKS Price Type'), 'help' => 'By default is set to = 5 for Free Sample, can be ignored in import, integer, WkSampleProduct field'),
-//                'price_tax' =>  array('label' => $this->l(''), 'help' => 'isBool'),
+                'price_tax' =>  array('label' => $this->l('WKS Price Tax'), 'help' => 'isBool'),
 //                'amount' => array('label' => $this->l(''), 'help' => 'isUnsignedFloat'),
-//                'price' => array('label' => $this->l(''), 'help' => 'isPrice'),
-                'button_label' => array('label' => $this->l('WKS Button Label'), 'help' => 'Default is \'Buy Sample\', leave empty for default text, string, WkSampleProduct field'),
+                'price' => array('label' => $this->l('WKS Price'), 'help' => 'isPrice'),
+                'button_label' => array('label' => $this->l('WKS Button Label'), 'help' => 'Default is "Buy Sample", leave empty for default text, string, WkSampleProduct field'),
                 'description' => array('label' => $this->l('WKS Description'), 'help' => 'Leave empty for no text, string, WkSampleProduct field'),
                 'active' => array('label' => $this->l('WKS Active'), 'help' => '0 = No, 1 = Yes, integer, WkSampleProduct field'),
             );
@@ -31,14 +38,16 @@ class AdminImportController extends AdminImportControllerCore
             $sample_fields_defaults = array(
                 'max_cart_qty' => 5,
                 'price_type' => 5,
-                'price_tax' => 0,
-                'amount' => 0.00,
-                'price' => 0,
+                // 'price_tax' => 0,
+                // 'amount' => 0.00,
+                // 'price' => 0,
                 'button_label' => 'Buy Sample'
+
             );
             $this->prefixed_sample_fields_defaults = $this->addSamplePrefix($sample_fields_defaults);
             self::$default_values += $this->prefixed_sample_fields_defaults;
         }
+
     }
 
     /**

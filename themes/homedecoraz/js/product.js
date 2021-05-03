@@ -141,7 +141,9 @@ $(document).ready(function() {
 
     // footage units from sold by
     var sfoUnit = $('#ptab-data tr td:contains("Sold By")').next('td').text();
-    $('.SquareFootageOptions-unit').text(sfoUnit);
+    var ending = sfoUnit === 'Box' ? 'es': 's';
+    $('.SquareFootageOptions-unit').text(sfoUnit + ending);
+    $('.SquareFootageOptions-unit-singular').text(sfoUnit);
 
     $("#calculateFootage").button().on("click", function(e) {
         e.preventDefault();

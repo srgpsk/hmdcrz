@@ -382,7 +382,7 @@
                                                        </div>
                                                     </td>
                                                     <td class="align-middle">
-                                                        <a class="price-link" id="calculateFootage">How many Square Feet Do I Need?</a>
+                                                        <a class="price-link" id="calculateFootage">How many square<br> feet do I need?</a>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -390,8 +390,8 @@
                                     </td>
                                  </tr>
                                  <tr>
-                                     <td><span class="SquareFootageOptions-unit">Unit</span>s Needed</td>
-                                     <td><span class="FloatLabel is-active pl-TextInput-label">Coverage Per <span class="SquareFootageOptions-unit">Unit</span></span></td>
+                                     <td><span class="SquareFootageOptions-unit">Unit</span> Needed</td>
+                                     <td><span class="FloatLabel is-active pl-TextInput-label">Coverage Per <span class="SquareFootageOptions-unit-singular">Unit</span></span></td>
                                     <td>Total Sqft Included</td>
                                 </tr>
                                 <tr>

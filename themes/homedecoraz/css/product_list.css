@@ -164,7 +164,7 @@ ul.product_list .product-image-container .quick-view {
 }
 
 ul.product_list .comments_note {
-    text-align: center;
+    text-align: left;
     overflow: hidden;
 }
 
@@ -339,7 +339,7 @@ ul.product_list .functional-buttons div.compare a.checked:before {
 Product list(Grid) Styles 
 ********************************************************/
 ul.product_list.grid > li {
-    text-align: center;
+    text-align: left;
     position: relative;
 }
 
@@ -361,7 +361,7 @@ ul.product_list.grid > li .product-container .product-image-container {
 }
 
 ul.product_list.grid > li .product-container .comments_note .star_content {
-    margin: 0 auto 12px;
+    margin: 0 auto;
     display: inline-block;
 }
 
@@ -720,9 +720,9 @@ ul.product_list.grid > li .product-container {
 }
 
 .product-container .content_price {
-    margin: 1rem -10px 0 -10px;
-    padding: .8rem 1rem;
-    border-top: 1px solid #f0f0f0;
+    margin: 0 -10px 0 -10px;
+    padding: .3rem 10px .8rem;
+    /* border-top: 1px solid #f0f0f0; */
     background: #fff;
     font-size: 1.6rem;
     color: rgb(138, 120, 156);
@@ -746,8 +746,8 @@ ul.product_list.grid > li .product-container {
     border: 0;
     font-size: 1.4rem;
     color: rgb(138, 120, 156);
-    border-left: 1px solid #f0f0f0;
-    border-top: 1px solid #f0f0f0;
+    /* border-left: 1px solid #f0f0f0; */
+    /* border-top: 1px solid #f0f0f0; */
 
     -webkit-transition: all .3s ease-in;
     -moz-transition: all .3s ease-in;

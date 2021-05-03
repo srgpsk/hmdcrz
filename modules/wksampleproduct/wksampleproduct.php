@@ -33,7 +33,8 @@ class WkSampleProduct extends Module
     {
         $this->name = 'wksampleproduct';
         $this->tab = 'front_office_features';
-        $this->version = '1.1.0';
+//        $this->version = '1.1.0';
+        $this->version = '99999.1.0'; // I believe there are some changes inside the module, so we can't have autoupdate
         $this->author = 'Webkul';
         $this->need_instance = 1;
         $this->ps_versions_compliancy = array('min' => '1.6', 'max' => _PS_VERSION_);
@@ -645,7 +646,7 @@ class WkSampleProduct extends Module
                 //sample is not added to cart
                 if ($cartQuantity > 0) {
                     $standardAdded = true;
-                    $this->context->smarty->assign('maxSampleAdded', 1);
+                    // $this->context->smarty->assign('maxSampleAdded', 1);
                 }
             }
             $this->context->smarty->assign(array(
@@ -683,7 +684,7 @@ class WkSampleProduct extends Module
     public function hookActionAdminOrdersListingFieldsModifier($params)
     {
         if (isset($params['select'])) {
-            $params['select'] .= ', coalesce(wsc.sample, 0) as sample ';
+            $params['select'] .= ', if(wsc.sample = 1, "Yes", "No") as sample ';
         }
         if (isset($params['join'])) {
             ' ON (apo.`id_order` = a.`id_order`)';
@@ -693,7 +694,7 @@ class WkSampleProduct extends Module
             $params['group_by'] .= ' GROUP BY a.`id_order`';
         }
         $params['fields']['sample'] = array(
-            'title' => $this->l('Contains Sample'),
+            'title' => $this->l('Sample'),
             'type' => 'bool',
             'align' => 'text-center',
             'orderby' => false,
@@ -1052,6 +1053,9 @@ class WkSampleProduct extends Module
                 ),
             )
         );
+//        $this->context->controller->addJS(
+//            $this->_path . '/views/js/wksampleproduct.js'
+//        );
     }
 
     public function modifyTables()
@@ -1404,7 +1408,7 @@ class WkSampleProduct extends Module
             PRIMARY KEY  (`id_sample_cart`, `id_shop`)
             ) ENGINE=" . _MYSQL_ENGINE_ . " DEFAULT CHARSET=utf8",
             "ALTER TABLE `" . _DB_PREFIX_ . "wk_sample_product` ADD UNIQUE `id_product, id_product_attribute` (`id_product`, `id_product_attribute`)",
-            "ALTER TABLE `" . _DB_PREFIX_ ."wk_sample_product_shop` ADD UNIQUE `id_product, id_product_attribute` (`id_product`, `id_product_attribute`)",
+            "ALTER TABLE `" . _DB_PREFIX_ ."wk_sample_product_shop` ADD UNIQUE `id_shop, id_product, id_product_attribute` (`id_shop`, `id_product`, `id_product_attribute`)",
         );
     }
 }
